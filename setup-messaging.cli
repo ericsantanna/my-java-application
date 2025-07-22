@@ -1,0 +1,27 @@
+connect
+
+# Add the topic
+/subsystem=messaging-activemq/server=default/jms-topic=message-topic:add(entries=["java:/jms/topic/message-topic","java:jboss/exported/jms/topic/message-topic"])
+
+# First ensure the socket binding exists
+/socket-binding-group=standard-sockets/socket-binding=messaging:add(port=5445)
+
+# Create a generic connector that uses this socket binding
+/subsystem=messaging-activemq/server=default/connector=netty:add(socket-binding=messaging,factory-class=org.apache.activemq.artemis.core.remoting.impl.netty.NettyConnectorFactory)
+
+# Create an acceptor that uses this socket binding
+/subsystem=messaging-activemq/server=default/acceptor=netty:add(socket-binding=messaging,factory-class=org.apache.activemq.artemis.core.remoting.impl.netty.NettyAcceptorFactory)
+
+# Remove the existing RemoteConnectionFactory if it exists
+/subsystem=messaging-activemq/server=default/connection-factory=RemoteConnectionFactory:remove
+
+# Create the RemoteConnectionFactory with proper JNDI entries
+/subsystem=messaging-activemq/server=default/connection-factory=RemoteConnectionFactory:add(connectors=[netty], entries=["java:jboss/exported/jms/RemoteConnectionFactory", "java:/jms/RemoteConnectionFactory"])
+
+# Update or add a connection factory to use this connector
+/subsystem=messaging-activemq/server=default/connection-factory=RemoteConnectionFactory:write-attribute(name=connectors,value=[netty])
+
+# Enable statistics
+/subsystem=messaging-activemq/server=default:write-attribute(name=statistics-enabled,value=true)
+
+reload
