@@ -35,3 +35,5 @@ build/
 data/
 t21-formatter/build/
 wildfly-users.env
+
+**/SOLUTION.md
