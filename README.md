@@ -8,7 +8,7 @@ An overengineered Java application used for an interview.
 
 Run:
 ```bash
-bash install-and-setup.sh
+sudo bash install-and-setup.sh
 chown -R ec2-user:ec2-user ~/my-java-application
 chown -R ec2-user:ec2-user /opt/overengineered-project
 ```
