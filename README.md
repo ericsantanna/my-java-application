@@ -8,9 +8,12 @@ An overengineered Java application used for an interview.
 
 Run:
 ```bash
+sudo yum install -y git nc
+git clone https://github.com/ericsantanna/my-java-application.git
+cd ~/my-java-application
 sudo bash install-and-setup.sh
-chown -R ec2-user:ec2-user ~/my-java-application
-chown -R ec2-user:ec2-user /opt/overengineered-project
+sudo chown -R ec2-user:ec2-user ~/my-java-application
+sudo chown -R ec2-user:ec2-user /opt/overengineered-project
 ```
 
 It is going to:
